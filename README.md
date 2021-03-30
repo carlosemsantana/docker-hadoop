@@ -197,7 +197,7 @@ $ ssh-keygen -A
 ### Configurar acesso SSH sem senha para o usuário hadoop
 
 
-Antes, verifique se você pode fazer o ssh para o localhost sem uma senha longa:
+Antes, verifique se você pode acessar o ssh para o localhost sem uma senha longa:
 
 <!-- #region -->
 ```python 
