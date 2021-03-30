@@ -481,15 +481,17 @@ Vamos testar e verificar se o Java (JDK) foi instalado corretamente.
 
 Feito! o java 1.8 foi instalado com sucesso. 
 
+```python
+continua...
+```
 
-continua... 
+```python
 
+```
 
-Estou finalizado este documento, próxima atualização será dia 31/3/2021 e não é uma pegadinha. rs
+```python
 
-
-[Carlos Eugênio](https://carlosemsantana.github.io/)
-
+```
 
 ### Referências 
 
