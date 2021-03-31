@@ -401,7 +401,7 @@ $ docker inspect datasets
 ![](img/datasets.png)
 
 
-``` Acesse cd /var/lib/docker/volumes/datasets/_data ``` vou padronizar neste diretório a cópia de todos os pacotes do Apache Hadoop que serão baixaremos.
+``` Acesse cd /var/lib/docker/volumes/datasets/_data ``` vou padronizar neste diretório a cópia de todos os pacotes do Apache Hadoop que baixaremos.
 
 
 ![](img/opt_local.png)
@@ -795,7 +795,7 @@ $ jps
 ![](img/jps2.png)
 
 
-Agora temos os serviços do HDF e YARN rodando.
+Agora temos os serviços do HDFS e YARN rodando.
 
 
 Para você acessar o ResourceManager via browser e ver detalhes do ambiente, abra o seu browser favorito na sua máquina local e digite:
@@ -811,13 +811,13 @@ $ http://172.17.0.3:8088/
 ![](img/localhost-yarn.png)
 
 <!-- #region -->
-Recomendo que você navegue um pouco e explore as opções. E antes de sair, encerre os serviços:
+Recomendo que você navegue um pouco e explore as opções. E, antes de sair, encerre os serviços:
 
 ``` bash
 
-$ stop-yarn.sh
-$ stop-dfs.sh
-$ docker container <ID do Container>
+$ stop-yarn.sh (YARN)
+$ stop-dfs.sh (HDFS)
+$ docker container stop <ID do Container> (Container Docker que está rodando o Hadoop)
 
 ```
     
@@ -825,7 +825,7 @@ $ docker container <ID do Container>
 
 **Pronto!** 
 
-Chegou o final a nossa jornada para a construção de um ambiente de testes Apache Hadoop para estudos.
+Chegou o final a nossa jornada para a instalação e configuração do container Docker para o nosso ambiente de testes Apache Hadoop para estudos.
 
 
 
