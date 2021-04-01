@@ -4,17 +4,17 @@
 ### Resumo
 
 
-Esta página foi elaborada com informações básicas sobre como você pode preparar um ambiente de testes [Apache Hadoop](https://hadoop.apache.org/) usando um "*container*" [Docker](https://www.docker.com/) em sua máquina local.
+Este documento foi elaborado, com informações básicas sobre como você pode preparar um ambiente de testes [Apache Hadoop](https://hadoop.apache.org/), usando um *container* [Docker](https://www.docker.com/) em sua máquina local.
 
-Construir um ambiente de desenvolvimento e testes em um "**container**" Docker local não será uma tarefa fácil, mas nos permitirá, estudar, aprender, depurar erros e no meu caso, executar aplicações de análise de dados propostas nas aulas do curso de [Formação Cientista de Dados da Data Science Academy](https://www.datascienceacademy.com.br) o qual estou concluíndo.
+Construir um ambiente de desenvolvimento e testes em um *container* Docker local não será uma tarefa fácil, mas nos permitirá, estudar, aprender, depurar erros, assim como, executar aplicações de análise de dados que forem propostas nas aulas do curso de [Formação Cientista de Dados da Data Science Academy](https://www.datascienceacademy.com.br).
 
-No curso de Formação Cientista de Dados aprendemos a instalar e configurar de forma manual e a partir do zero em uma VM VirtualBox com Linux CentOS o Apache Hadoop e alguns dos produtos do seu Ecossistema.
-
-
-``` Objetivo deste documento é ajudar você instalar e configurar de forma manual um container Docker Apache Hadoop em modo Pseudo-Distribuído (Pseudo-Distributed). ``` 
+O curso de Formação Cientista de Dados explica passo-a-passo como instalar e configurar em uma VM VirtualBox com Linux CentOS, o Apache Hadoop e alguns dos produtos do seu Ecossistema.
 
 
-No final desta jornada teremos um ambiente de testes Apache Hadoop para estudos onde será produtivo experimentar o principal Framework para soluções de Big Data do mercado, tanto para armazenamento quando processamento de dados distribuído. 
+``` Objetivo deste documento, é ajudar na instalação e configuração manual de um container Docker Apache Hadoop, em modo Pseudo-Distribuído (Pseudo-Distributed). ``` 
+
+
+No final desta jornada, teremos um ambiente de testes para estudos, onde será produtivo experimentar um framework para soluções de Big Data, tanto para armazenamento, quando processamento de dados distribuído. 
 
 
 ### Aviso
@@ -25,19 +25,19 @@ Esta é uma sugestão de uma configuração inicial para uso em máquinas de tes
 
 ### Pré-requisitos:   
 
-    - Máquina com arquitetura 64Bits e sistema operacional Linux instalado.
-    - Você precisa ter o Docker instalado em sua máquina local.
-    - Noções básicas do funcionamento do Docker.
+    - Máquina com arquitetura 64Bits e sistema operacional Linux instalado;
+    - Você precisa ter o Docker instalado em sua máquina local;
+    - Noções básicas do funcionamento do Docker;
 
 <!-- #region -->
 ### Lembrando que:
 
-Quando estiver trabalhando no container, não use o comando "exit" para sair do console, se fizer seu container morre e você perderá todos os pacotes instalados até este ponto. 
+Quando estiver trabalhando no container, não use o comando *exit* para sair do console, se fizer seu container morre e você perderá todos os pacotes instalados até este ponto. 
 
 Use o seguinte atalho do teclado: 
 
 
-### mantenha o botão Crtl pressionado +p + q ### 
+### Mantenha o botão Crtl pressionado +p + q ### 
 
 Assim, você sairá do container e ele continuará em execução.
 
@@ -52,12 +52,12 @@ $ docker attach <ID do Container> (voltar ao container)
 
 
 
-Perceba que na ilustração acima, os ambientes máquina local e container Docker estão isolados apesar de compartilharem dos recursos de hardware da máquina local.
+Na ilustração acima, os ambientes, máquina local e container Docker estão isolados, apesar de compartilharem dos recursos de equipamento físico da máquina local.
 
 <!-- #region -->
 # Iniciar a instalação
 
-- Baixar uma [imagem Docker da distribuição Linux CentOS](https://hub.docker.com/_/centos)
+- Baixe uma [imagem Docker da distribuição Linux CentOS](https://hub.docker.com/_/centos);
 
 
 ```python
@@ -66,8 +66,6 @@ $ docker pull centos
 
 ![](img/docker-pull.png)
 <!-- #endregion -->
-<!-- #endregion -->
-
 <!-- #region -->
 - Caso você tenha uma imagem local, use a instrução:
 
@@ -80,7 +78,7 @@ $ docker pull localhost:5000/centos
 ![](img/docker-pull-localhost.png)
 
 
-### Executar o Containers Docker CentOS
+### Execute o Containers Docker CentOS
 
 
 - Para subir um container em modo interativo, use instrução:
@@ -103,10 +101,10 @@ $ docker container run -ti centos
 ```
 <!-- #endregion -->
 
-### Preparar o ambiente CentOS 
+### Preparando o ambiente CentOS
 
 
-Agora vamos instalar alguns utilitários, pacotes adicionais e configurar o serviço SSH.
+Instalaremos alguns utilitários, pacotes adicionais e configuraremos o serviço SSH. Execute as instruções abaixo:
 
 <!-- #region -->
 ```bash
@@ -128,29 +126,24 @@ $ yum install nano -y
 $ yum install iproute -y
 $ yum install passwd -y
 $ yum install sudo -y
-```
-<!-- #endregion -->
-
-### Instalar e configurar o SSH
-
-<!-- #region -->
-```bash
 $ yum install openssh-server -y
 $ yum install openssh-clients -y
 ```
 <!-- #endregion -->
 
-Editar o arquivo **/etc/ssh/sshd_config** e ajustar os seguintes parâmetros:
+### Configure o SSH
+
+
+Edite o arquivo **/etc/ssh/sshd_config** e ajuste os seguintes parâmetros:
 ``` 
 Port 22
 ListemAdress 0.0.0.0
 PermitRootLogin No
-AllowUsers santana, hadoop 
+AllowUsers hadoop 
 ```
-(**Lembrando que:** no parâmetro AllowUsers estou usando o meu usuário, mas na sua máquina você ajusta o seu.)
 
 
-Para editar os arquivos de configuração no console do Linux eu uso o comando: ```nano``` que é mais amigável que o ```vim```.
+Editaremos com o *nano*, mas pode ser usado qualquer editor.
 
 <!-- #region -->
 ```bash
@@ -161,16 +154,19 @@ $ sudo nano /etc/ssh/sshd_config
 ![](img/docker-sshd.png)
 
 
-Continuação da edição do arquivo de configuração di SSHD_CONFIG
+Continuando...
 
 
 ![](img/docker-sshd2.png)
 
 
-Para gravar as alterações use o atalho do teclado: **(Ctrl + x + Y)**
+Para gravar as alterações, use o atalho do teclado: **(Ctrl + x + Y)**
 
 
-### Criar os usuários de trabalho e administração
+###  Incluir os usuários de trabalho e administração
+
+
+Com usuário administrador *root* execute as instruções abaixo:
 
 <!-- #region -->
 ```bash
@@ -181,8 +177,7 @@ $ passwd hadoop
 ```
 <!-- #endregion -->
 
-Editar o arquivo ***/etc/sudoers*** e configure as permissões de acesso dos usuários, no meu caso, 
-ajustei as permissões do usuário hadoop idênticas ao do usuário root no arquivo.
+Edite o arquivo *sudoers* e ajuste as permissões do usuário *hadoop*, idênticas ao do usuário *root* no arquivo.
 
 <!-- #region -->
 ```bash
@@ -193,7 +188,7 @@ $ sudo nano /etc/sudoers
 ![](img/sudoers.png)
 
 
-### Gerar chaves SSH no Linux
+### Crie as chaves SSH no CentOS
 
 
 Para gerar uma chave SSH em seu servidor Linux, execute o comando ``` ssh-keygen ```. 
@@ -207,10 +202,10 @@ $ ssh-keygen -A
 ![](img/sshd-pwd.png)
 
 
-### Configurar acesso SSH sem senha para o usuário hadoop
+### Configure acesso SSH, sem senha para o usuário *hadoop*
 
 
-Antes, verifique se você pode acessar via ssh localhost sem uma senha longa:
+Verifique o acesso *ssh localhost*, é possível acessar sem uma senha? execute a instrução abaixo:
 
 <!-- #region -->
 ```python 
@@ -221,7 +216,10 @@ $ ssh localhost
 ![](img/teste-login1.png)
 
 
-Se não foi possível logar via ssh localhost sem uma senha, então, execute a sequência de comandos abaixo:
+No console, não foi possível acessar sem uma senha. O Apache Hadoop precisa que o acesso seja via SSH e sem senha.
+
+
+Para resolver esse problema, execute as instruções abaixo:
 
 <!-- #region -->
 ```python
@@ -233,7 +231,7 @@ Se não foi possível logar via ssh localhost sem uma senha, então, execute a s
 ```
 <!-- #endregion -->
 
-Verifique o acesso com o usuário root.
+Verifique o acesso com o usuário *root*.
 
 <!-- #region -->
 ```python
@@ -245,10 +243,10 @@ $ ssh localhost
 ![](img/root.png)
 
 
-***Correto! o usuário root não tem permissão para acesso remoto no serviço.***
+**Correto! o usuário root não tem permissão para acesso remoto no serviço.**
 
 
-Verifique o acesso com o usuário hadoop.
+Verifique o acesso com o usuário *hadoop*.
 
 <!-- #region -->
 ```python
@@ -260,7 +258,7 @@ $ ssh localhost
 ![](img/hadoop.png)
 
 
-**Funcionou!** o usuário hadoop tem acesso sem senha no ssh, agora podemos continuar a instalação do Apache Hadoop
+**Funcionou!** o usuário *hadoop* tem acesso sem senha no ssh, agora podemos continuar a instalação do Apache Hadoop.
 
 
 A partir deste ponto, você pode acessar o container via comandos ```docker attach``` ou ```ssh ```.
@@ -272,10 +270,10 @@ Para descobrir o IP do container use a instrução ```docker inspect <ID do Cont
 ### Backup
 
 
-Agora que finalizamos a primeira etapa da preparação do ambiente, vamos gerar uma imagem customizada do container CentOS e enviá-lo para o repositório local. 
+Agora que finalizamos a primeira etapa da preparação do ambiente, enviaremos uma imagem customizada do container CentOS, para o repositório local. .
 
 
-Lembre-se de que para sair do container e deixá-lo ainda em execução é necessário pressionar **Crtl + p + q**. 
+Lembre-se, para sair do container e deixá-lo ainda em execução, é necessário pressionar **Crtl + p + q**. 
 
 <!-- #region -->
 ```python 
@@ -286,7 +284,7 @@ $ docker container ls
 ![](img/docker-container-ls.png)
 
 
-Vamos listar os containers em execução para descobrir qual é o ID do CONTAINER que estamos customizando. 
+Listaremos os containers em execução para descobrir qual é o ID do CONTAINER que estamos customizando. 
 
 <!-- #region -->
 ```python 
@@ -297,7 +295,7 @@ $ docker commit -m "Apache Hadoop" <ID do Container>
 ![](img/commit1.png)
 
 
-Imagem gerada com sucesso! agora vamos enviar a imagem para o repositório.
+Imagem gerada com sucesso! agora enviaremos a imagem para o repositório local. (Backup)
 
 <!-- #region -->
 ```python 
@@ -333,13 +331,10 @@ $ docker push localhost:5000/centos:8.0
 Pronto! imagem arquivada com sucesso.
 
 
-### Vamos criar [Volumes Docker](https://docs.docker.com/storage/volumes/) para compartilharmos arquivos com a máquina local.
+### Criaremos [Volumes Docker](https://docs.docker.com/storage/volumes/) para compartilharmos arquivos com a máquina local.
 
 
-Ao compartilhar uma pasta com a máquina local nos permitirá maior agilidade no download e cópia dos pacotes de softwares da máquina local para o container onde estamos instalando o Apache Hadoop. 
-
-
-### Criar volumes
+Para criar um volume, execute as instruções abaixo:
 
 <!-- #region -->
 ```python 
@@ -351,10 +346,10 @@ $ docker volume create hadoop_home
 ![](img/docker-volume.png)
 
 
-Os volumes foram criados, agora vamos subir nova instância do container customizada para acesso as pastas.
+Os volumes foram criados, agora subiremos nova instância do container customizada para acesso às pastas.
 
 
-Para o container atual
+Para exibir os containers ativos, execute as instruçôes abaixo:
 
 <!-- #region -->
 ```python
@@ -373,7 +368,10 @@ $ docker stop 6aa313b91f6d
 ![](img/docker-ps2.png)
 
 
-O container foi encerrado. Agora, vamos subir o novo container com os acessos compartilhados.
+O container foi encerrado. Agora, subiremos o novo container com os acessos compartilhados.
+
+
+Para instanciar o novo container, execute a instrução abaixo:
 
 <!-- #region -->
 ```python
@@ -387,10 +385,10 @@ $ docker container run -ti \
 ![](img/shell.png)
 
 
-Pronto, o novo container foi criado. Vamos testar os compartilhamentos de arquivos, vou copiar arquivos para os diretótios **datasets** e **hadoop_home** na máquina local. Que serão listados respectivamente em **/opt** e **/home/hadoop** do container.
+Pronto, o novo container foi criado. Testaremos os compartilhamentos de arquivos.
 
 
-Para descobrir onde os volumes foram criados na máquina local digite no console da máquina local:
+Para descobrir onde os volumes foram criados na máquina local, digite no console da máquina local a instrução abaixo:
 
 <!-- #region -->
 ```python
@@ -401,13 +399,13 @@ $ docker inspect datasets
 ![](img/datasets.png)
 
 
-``` Acesse cd /var/lib/docker/volumes/datasets/_data ``` vou padronizar neste diretório a cópia de todos os pacotes do Apache Hadoop que baixaremos.
+``` Acesse cd /var/lib/docker/volumes/datasets/_data ``` padronize neste diretório, cópia de todos os pacotes do Apache Hadoop baixados.
 
 
 ![](img/opt_local.png)
 
 
-Para testarmos o mapeamento copiei o JDK que instalaremos.
+Para testarmos o mapeamento, faça uma copia do JDK para o diretório.
 
 <!-- #region -->
 ```python
@@ -421,7 +419,7 @@ $ docker inspect hadoop_home
 ``` Acesse cd /var/lib/docker/volumes/hadoop_home/_data ``` Este será um diretório persistente do usuário hadoop.
 
 
-## Agora vamos a Instalção do Apache Hadoop
+## Início da Instalação do Apache Hadoop
 
 
 ### O ambiente Hadoop será instalado e configurado com o login hadoop. 
@@ -456,7 +454,7 @@ O Java 1.8 foi baixado e copiado para o diretório``` datasets ``` na máquina l
 2. Para instalar o java você precisa descompactar o arquivo jdk-8u281-linux-x64.tar.gz em /opt e configurar as variáveis de ambiente.
 
 
-**Para instalar o JDK execute a sequencia de instruções abaixo no console do container:**
+**Para instalar o JDK execute a sequencia de instruções abaixo, no console do container:**
 
 <!-- #region -->
 ```python
@@ -473,10 +471,10 @@ $ sudo chmod 775 -R jdk
 ![](img/java_opt.png)
 
 
-Feito, o java foi copiado para /opt e ajustamos a nomenclatura as permissões. Agora vamos configuras as variáveis de ambiente e testar.
+Feito, o java foi copiado para /opt, a nomenclatura e as permissões foram ajustadas. Agora configuraremos as variáveis de ambiente e testaremos.
 
 
-**Vamos editar o arquivo .bashrc e incluir as variáveis de memória do JAVA (JDK)**
+**Edite o arquivo .bashrc e inclua as variáveis de ambiente do JAVA (JDK)**
 
 
 Execute a sequencia de instruções abaixo:
@@ -497,13 +495,13 @@ $ source .bashrc
 ![](img/bashrc_java.png)
 
 
-Vamos testar e verificar se o Java (JDK) foi instalado corretamente.
+Testaremos e verificaremos se o Java (JDK) foi instalado corretamente.
 
 
 ![](img/java-version.png)
 
 
-Feito! o java 1.8 foi instalado com sucesso. 
+O java 1.8 foi instalado com sucesso. 
 
 
 # Instalação do Hadoop
@@ -515,11 +513,11 @@ Faça o [download do pacote Hadoop](http://hadoop.apache.org/) no site da Apache
 ![](img/download-hadoop.png)
 
 
-Quando o download terminar, copie o pacote para: ```/var/lib/docker/volumes/datasets/_data ``` em sua máquina local e inicie a instalação do Hadoop. 
+Quando o download terminar, copie o pacote para: ```/var/lib/docker/volumes/datasets/_data ``` em sua máquina local, e inicie a instalação do Hadoop. 
 
 **Resumindo:** 
 
-A instalação do Hadoop consiste em descompactar o arquivo baixado no diretório **/opt**, ajustar as permissões e nomenclaturas e inserir as variáveis de ambiente no arquivo **.bashrc** do usuário **hadoop**. 
+A instalação do Hadoop, consiste em descompactar, e copiar o arquivo baixado para o diretório **/opt**, ajustar as permissões, nomenclaturas e inserir as variáveis de ambiente no arquivo **.bashrc** do usuário **hadoop**. Conforme sequência de instruções abaixo:
 
 <!-- #region -->
 ```bash
@@ -541,7 +539,7 @@ $ ls -lia
 ![](img/opt-hadoop.png)
 
 
-Agora vamos ajustar as variáveis de ambiente no arquivo .bashrc
+Agora ajustaremos as variáveis de ambiente no arquivo *.bashrc*, seguindo as instruções abaixo:
 
 <!-- #region -->
 ```bash
@@ -565,7 +563,7 @@ $ source .bashrc
 ![](img/bashrc-hadoop.png)
 
 
-As variáveis de ambiente foram configuradas, agora vamos testar.
+As variáveis de ambiente foram configuradas. Execute a instrução abaixo:
 
 <!-- #region -->
 ```bash
@@ -582,10 +580,10 @@ Feito! toda a configuração foi realizada com sucesso.
 # Configuração do Hadoop
 
 
-Vamos configurar o Hadoop no Modo Pseudo-Distribuído (Pseudo-Distributed). 
+Configuraremos o Hadoop no Modo Pseudo-Distribuído (Pseudo-Distributed). 
 
 
-Edite os arquivos de configuração que estão no ``` /opt/hadoop/etc/hadoop ``` e insira respectivamente os parâmetros abaixo:
+Edite os arquivos de configuração, que estão no diretório ``` /opt/hadoop/etc/hadoop ``` e insira respectivamente os parâmetros abaixo:
 
 1. core-site.xml
 
@@ -616,7 +614,7 @@ Edite os arquivos de configuração que estão no ``` /opt/hadoop/etc/hadoop ```
 **O processo de instalação e configuração do Apache Hadoop foi concluído.**
 
 
-# Vamos inicializar o HDFS
+# Iniciaremos o HDFS - Gerenciador de arquivos distribuído
 
 
 Execute as seguintes instruções:
@@ -636,7 +634,7 @@ $ hdfs namenode -format
 O sistema de arquivos foi formatado com sucesso!
 
 
-2. Estamos prontos para inicializar o HDFS, para iniciar digite:
+2. Inicializando o HDFS. Para inicializar o HDFS, execute a instrução abaixo:
 
 <!-- #region -->
 ``` bash
@@ -658,7 +656,7 @@ $ sudo /usr/sbin/sshd
 ```
 <!-- #endregion -->
 
-4. Agora, inicie o HDFS novamente.
+4. Iniciaremos novamente o HDFS.
 
 <!-- #region -->
 ``` bash
@@ -675,7 +673,7 @@ $ start-dfs.sh
 
 <!-- #region -->
 ``` bash
-$ jps (Este é uma instrução que permite visualizar todos os serviços do Hadoop que estão rodando)
+$ jps (Esta é uma instrução, que permite visualizar todos os serviços do Hadoop em execução.)
 ```
 <!-- #endregion -->
 
@@ -685,10 +683,10 @@ $ jps (Este é uma instrução que permite visualizar todos os serviços do Hado
 Os serviços estão rodando.
 
 
-Para você acessar o Namenode via browser e ver detalhes do ambiente, abra o seu browser favorito na sua máquina local e digite:
+Para você acessar o *Namenode* via *browser*, e ver detalhes do ambiente.
 
 <!-- #region -->
-(**Lembrando que**: O IP do container será diferente na sua máquina, informe o seu IP e a porta)
+Abra o seu navegador favorito, digite o IP do container e a porta.
 
 ``` bash
 $ http://172.17.0.3:9870/ 
@@ -698,10 +696,10 @@ $ http://172.17.0.3:9870/
 ![](img/localhost.png)
 
 
-Recomendo que você navegue um pouco e explore as opções.
+Recomendo, navegar e explorar as opções.
 
 
-**Alguns comandos adicionais:**
+**Comandos adicionais:**
 
 <!-- #region -->
 ``` bash
@@ -717,19 +715,19 @@ $ stop-dfs.sh
 ![](img/hdf-ls.png)
 
 
-Pronto! o nosso ambiente está funcionando perfeitamente.
+Pronto! ambiente funcionando perfeitamente.
 
 
 # Configurando e inicializando o YARN
 
 
-O YARN é uma gerenciamento de recursos para Apache Hadoop. 
+O YARN é um gerenciador de recursos para Apache Hadoop. 
 
 
 O YARN roda sobre o HDFS e permite diferentes mecanismos de processamento de dados. O Apache YARN é considerado o sistema operacional de dados do Hadoop.
 
 
-Para habilitar o YARN edite os arquivos de configuração que estão no /opt/hadoop/etc/hadoop e insira respectivamente os parâmetros abaixo:
+Para habilitar o YARN edite os arquivos de configuração, mapred-site.xml e yarn-site.xml, que estão no diretório /opt/hadoop/etc/hadoop, e insira respectivamente os parâmetros abaixo:
 
 
 1. mapred-site.xml:
@@ -748,7 +746,7 @@ Para habilitar o YARN edite os arquivos de configuração que estão no /opt/had
 ![](img/mapred-site-xml.png)
 
 
-Grave a configuração
+Grave a configuração.
 
 
 1. yarn-site.xml:
@@ -767,10 +765,10 @@ Grave a configuração
 ![](img/yarn-site-xml.png)
 
 
-Grave a configuração
+Grave a configuração.
 
 
-# Vamos inicializar o YARN
+# Inicializaando o YARN
 
 
 Execute as seguintes instruções:
@@ -795,14 +793,12 @@ $ jps
 ![](img/jps2.png)
 
 
-Agora temos os serviços do HDFS e YARN rodando.
+Os serviços HDFS e YARN estão rodando.
 
 
-Para você acessar o ResourceManager via browser e ver detalhes do ambiente, abra o seu browser favorito na sua máquina local e digite:
+Para acessar o *ResourceManager* via *browser* e ler os detalhes do ambiente, abra o seu browser favorito, informe o seu *IP*, conforme instrução abaixo:
 
 <!-- #region -->
-(**Lembrando que**: O IP do container será diferente na sua máquina, informe o seu IP e a porta)
-
 ``` bash
 $ http://172.17.0.3:8088/
 ```
@@ -811,7 +807,7 @@ $ http://172.17.0.3:8088/
 ![](img/localhost-yarn.png)
 
 <!-- #region -->
-Recomendo que você navegue um pouco e explore as opções. E, antes de sair, encerre os serviços:
+Recomendo, navegar e explore as opções. E, antes de sair, encerre os serviços.
 
 ``` bash
 
@@ -825,7 +821,7 @@ $ docker container stop <ID do Container> (Container Docker que está rodando o 
 
 **Pronto!** 
 
-Chegou o final a nossa jornada para a instalação e configuração do container Docker para o nosso ambiente de testes Apache Hadoop para estudos.
+Chegou o final da jornada, para a instalação e configuração do Apache Hadoop em um container Docker.
 
 
 
